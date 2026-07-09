@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { generateText, NoObjectGeneratedError, Output } from "ai";
+import { generateObject, generateText, NoObjectGeneratedError } from "ai";
 import { z } from "zod";
 import { createLovableAiGatewayProvider } from "./ai-gateway.server";
 
@@ -77,12 +77,12 @@ Meetings: ${data.meetings || "(none)"}
 
 Allocate realistic time blocks, include short breaks, and prioritize urgent deadlines. Return 6-12 items. For a Weekly plan, prefix each time with the day (e.g. "Mon 09:00-10:00"). Status should be one of: "Pending", "In Progress", "Scheduled".`;
     try {
-      const { output } = await generateText({
+      const { object } = await generateObject({
         model: gateway("openai/gpt-5.5"),
-        output: Output.object({ schema: PlanSchema }),
+        schema: PlanSchema,
         prompt,
       });
-      return output;
+      return object;
     } catch (error) {
       if (NoObjectGeneratedError.isInstance(error)) {
         return { items: [] };
