@@ -93,10 +93,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Automate workplace tasks with AI-powered emails, planners, and chat — no sign-in required.",
+          "Session-only, privacy-first AI workspace with a smart email generator, task planner, and workplace chatbot.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "AI Workplace Productivity Assistant" },
+      { name: "twitter:description", content: "Session-only, privacy-first AI workspace with a smart email generator, task planner, and workplace chatbot." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/77f906eb-c6b1-45de-986b-bd62679d7435/id-preview-90f9fb45--f2b0afa8-2405-40e3-b94b-c1b4bfcfa27b.lovable.app-1783628322026.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/77f906eb-c6b1-45de-986b-bd62679d7435/id-preview-90f9fb45--f2b0afa8-2405-40e3-b94b-c1b4bfcfa27b.lovable.app-1783628322026.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
