@@ -11,6 +11,12 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SessionProvider } from "../lib/session-context";
+import { SidebarProvider, SidebarInset } from "../components/ui/sidebar";
+import { AppSidebar } from "../components/app-sidebar";
+import { Topbar } from "../components/topbar";
+import { ResponsibleAiBanner } from "../components/responsible-ai-banner";
+import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -77,20 +83,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "AI Workplace Productivity Assistant" },
+      {
+        name: "description",
+        content:
+          "Session-only, privacy-first AI workspace with a smart email generator, task planner, and workplace chatbot.",
+      },
+      { property: "og:title", content: "AI Workplace Productivity Assistant" },
+      {
+        property: "og:description",
+        content:
+          "Automate workplace tasks with AI-powered emails, planners, and chat — no sign-in required.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
+      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
@@ -116,11 +125,23 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <SessionProvider>
+        <SidebarProvider>
+          <AppSidebar />
+          <SidebarInset>
+            <div className="flex min-h-screen w-full flex-col">
+              <Topbar />
+              <main className="flex-1">
+                <Outlet />
+              </main>
+              <ResponsibleAiBanner />
+            </div>
+          </SidebarInset>
+        </SidebarProvider>
+        <Toaster />
+      </SessionProvider>
     </QueryClientProvider>
   );
 }
